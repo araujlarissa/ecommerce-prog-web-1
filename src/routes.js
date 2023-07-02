@@ -3,6 +3,8 @@ import { Default } from './pages/Default';
 import { Login } from './pages/Login';
 import { SignUp } from './pages/SignUp';
 import { Profile } from './pages/Profile';
+import { HomeAdmin } from './pages/HomeAdmin';
+import { HomeCliente } from './pages/HomeCliente';
 
 export const router = createBrowserRouter([
     {
@@ -25,6 +27,14 @@ export const router = createBrowserRouter([
                 path: '/profile/',
                 element: <Profile />
             },
+            {
+                path: '/dashboard',
+                element: <HomeAdmin /> 
+            },
+            {
+                path: '/paginaInicial',
+                element: <HomeCliente /> 
+            }
         ],
     }
 ])

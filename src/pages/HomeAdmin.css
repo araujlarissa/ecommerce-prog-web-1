@@ -1,0 +1,257 @@
+.section-admin {
+    margin: 48px 97px;
+}
+
+.section-admin h1 {
+    color: #5E5E5E;
+    font-size: 24px;
+}
+
+.section-admin .admin {
+    background-color: #FFE177;
+    color: #5E5E5E;
+
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    
+    margin-left: 12px;
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+
+.div-menu {
+    margin-top: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid var(--gray-5);
+    padding-bottom: 12px;
+}
+
+.div-menu .group-btn button {
+    background: none;
+    border: none;
+
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 150%;
+    color: #5E5E5E;
+
+    margin-right: 32px;
+}
+
+.div-menu .group-btn button:hover {
+    color: var(--gray-4);
+}
+
+.div-menu #selected {
+    color: var(--blue);
+}
+
+.btn-secondary {
+    background: var(--yellow);
+    color: var(--black-purple);
+    font-weight: 500;
+
+    border: 0;
+    border-radius: 8px;
+    
+    padding: 12px 16px;
+}
+
+.btn-secondary:hover {
+    background: var(--yellow-hover);
+    cursor: pointer;
+}
+
+.lista-produto, .lista-categoria {
+    width: 100%;
+    gap: 16px;
+}
+
+.lista-produto .item-produto, .item-categoria {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border: 1px solid var(--gray-5);
+    border-radius: 4px;
+    padding: 16px;
+}
+
+.lista-produto .item-produto .infos-produto {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.lista-produto .item-produto img {
+    height: 100px;
+}
+
+.lista-produto .item-produto .dados {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.categorias {
+    display: flex;
+    gap: 8px;
+}
+
+.categorias .tag {
+    background-color: #77e7ff;
+    color: #5E5E5E;
+
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+.lista-produto .item-produto label {
+    color: var(--gray-1);
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    line-height: 130%; 
+
+    max-width: 60%;
+}
+
+.lista-produto .item-produto .estoque, .preco {
+    color: var(--gray-3);
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    line-height: 130%; 
+}
+
+.acoes {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px; 
+}
+
+.acoes .secondary, .tertiary {
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 8px 16px;
+    gap: 12px; 
+
+    border-radius: 8px;
+    border: 1px solid #6283FA; 
+
+    color: #6283FA;
+    font-size: 16px;
+    font-family: 'Roboto';
+    font-weight: 500;
+    line-height: 150%; 
+} 
+
+.acoes .secondary:hover {
+    background: #6283FA;
+    color: #fff;
+}
+
+.tertiary {
+    border: none;
+}
+
+.tertiary:hover {
+    opacity: 70%;
+}
+
+.infos-categoria {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 16px;  
+}
+
+.infos-categoria .tag {
+    background: #77E7FF; 
+    display: flex;
+    gap: 8px; 
+    padding: 8px 12px;
+
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    
+    border-radius: 4px;
+}
+
+.infos-categoria .subcategorias {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.infos-categoria label {
+    color: #5E5E5E;
+    font-size: 14px;
+    font-family: 'Roboto';
+    font-weight: 500;
+}
+
+.infos-categoria .tag.sub {
+    font-size: 12px;
+    background: #FFB877;
+} 
+
+/* Adicionar categoria e produto */
+
+.add h3 {
+    color: #6283FA;
+    font-size: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    line-height: 130%;
+    margin-bottom: 24px;
+}
+
+.add input {
+    width: 597px;
+}
+
+.add .btn-secondary {
+    padding: 16px 12px;
+    width: 288px;
+    margin-top: 8px;
+}
+
+textarea {
+    background: var(--white);
+    color: var(--black-purple);
+
+    border: 1px solid var(--gray-4);
+    border-radius: 8px;
+
+    padding: 16px;
+    margin-bottom: 20px;
+
+    width: 597px;
+}
+
+.numbers {
+    display: flex;
+    gap: 24px;
+}
+
+.numbers input {
+    width: 287px;
+}

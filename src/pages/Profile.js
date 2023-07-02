@@ -81,7 +81,8 @@ export function Profile () {
 
     const logOff = () => {
         sessionStorage.clear();
-        navigate('/');
+        window.location.pathname = '/paginaInicial';
+        window.location.reload();
     }
 
     const deleteAccount = async () => {
