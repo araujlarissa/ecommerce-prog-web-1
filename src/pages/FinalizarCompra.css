@@ -75,3 +75,15 @@
 .forma-pagamento .codigo:hover {
     opacity: 70%;
 }
+
+.nao-logado {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.nao-logado label {
+    align-self: center;
+    color: var(--gray-1);
+    font-weight: 500;
+}

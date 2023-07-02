@@ -5,7 +5,7 @@ import { Input } from "../components/Input";
 
 import './FinalizarCompra.css';
 
-const isLogged = true;
+const isLogged = false;
 
 const user = {
     id: '123',
@@ -88,6 +88,34 @@ export function FinalizarCompra() {
                                 <label>{user.endereco},</label>
                             </div>
                         :
+                        <div className="nao-logado div-column">
+                        <form className="group-inputs finalizar div-column">
+                            <div className="inputs-row">
+                                <Input 
+                                    id="email"
+                                    type="email"
+                                    label="Email"
+                                    placeholder="Ex: alifernandes@gmail.com"
+                                />
+
+                                <Input 
+                                    id="password"
+                                    type="password"
+                                    label="Senha"
+                                    placeholder="Digite sua senha"
+                                />
+                            </div>
+
+                            <button 
+                                className="yellow"
+                                onSubmit={() => {}}
+                            >
+                                Entrar
+                            </button>
+                        </form>
+
+                        <label>OU</label>
+
                         <form className="group-inputs finalizar div-column">
                             <div className="inputs-row">
                                 <Input 
@@ -127,6 +155,7 @@ export function FinalizarCompra() {
                                 Criar minha conta
                             </button>
                         </form>
+                        </div>
                         }
                     </div>
 
