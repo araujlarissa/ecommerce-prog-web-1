@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import api from "../services/api";
-import { Link,  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Input } from "../components/Input";
 
 import './HomeAdmin.css';
 
 export function HomeAdmin() {
     const navigate = useNavigate();
+    const [successMessage, setSuccessMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
     const [status, setStatus] = useState("produtos");
     const [meusProdutos, setMeusProdutos] = useState([]);
     const [minhasCategorias, setMinhasCategorias] = useState([]);
@@ -15,13 +17,15 @@ export function HomeAdmin() {
         descricao: '',
         preco: 0,
         quantidade: 0,
-        categoriaId: 0
+        categoriaId: 0,
+        foto:""
       });
       const [addProdutoForm, setAddProdutoForm] = useState({
         descricao: '',
         preco: 0,
         quantidade: 0,
-        categoriaId: 0
+        categoriaId: 0,
+        foto: ""
       });
       const [editCategoriaForm, setEditCategoriaForm] = useState({
         id : 0,
@@ -31,26 +35,21 @@ export function HomeAdmin() {
       const [addCategoriaForm, setAddCategoriaForm] = useState({
         descricao: '',
       });
+    const [meusPedidos, setMeusPedidos] = useState([]);
 
     const handleSetProdutos = () => setStatus("produtos");
     const handleSetCategorias = () => setStatus("categorias");
-
+    const handleSetPedidos = () => setStatus("pedidos");
 
     const handleSetAddProduto = () => setStatus("addProduto");
     const handleSetAddCategoria = () => setStatus("addCategoria");
 
     const handleSetEditProduto = (index) => {
-        // quero pegar o id do elemento clicado 
-        // passar as informações para "editar Produto" de acordo com o id
-        // só depois atualizar o status
         setEditProdutoForm(meusProdutos[index])
         setStatus("editProduto");
     }
 
     const handleDeleteProduto = async (index) => {
-        // quero pegar o id do elemento clicado 
-        // passar as informações para "editar Produto" de acordo com o id
-        // só depois atualizar o status
         let prod = meusProdutos[index]
         try {
 
@@ -62,20 +61,38 @@ export function HomeAdmin() {
                   'Content-Type': 'application/json'
                 }
               });
-            if(response.data === true)
-              navigate('/dashboard')
-              window.location.reload();
- 
+            handleMessage(response.data,"Produto excluído com sucesso!","Erro ao excluir produto")
         
           } catch (error) {
             console.error('Erro ao editar o produto:', error);
           }
     }
 
+    const handleDeletePedidoCliente = async (index) => {
+        let pedido = meusPedidos[index]
+        try {
+
+            const response = await api.delete(`/api/v1/user/deleteUserSale`, {
+                data: {
+                 vendaId: pedido.id
+                },
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              });
+            handleMessage(response.data,"Pedido do cliente excluído com sucesso!","Erro ao excluir pedido do cliente")
+ 
+        
+          } catch (error) {
+            setErrorMessage("Erro ao excluir pedido do cliente");  
+            setTimeout(() => {
+                setErrorMessage("");
+                }, 2000);
+            console.error('Erro ao editar o produto:', error);
+          }
+    }
+
     const handleDeleteCategoria = async (index) => {
-        // quero pegar o id do elemento clicado 
-        // passar as informações para "editar Produto" de acordo com o id
-        // só depois atualizar o status
         let cat = minhasCategorias[index]
         try {
 
@@ -87,9 +104,7 @@ export function HomeAdmin() {
                   'Content-Type': 'application/json'
                 }
               });
-            if(response.data === true)
-              navigate('/dashboard')
-              window.location.reload();
+              handleMessage(response.data,"Categoria excluída com sucesso!","Erro ao excluir categoria")
         
           } catch (error) {
             console.error('Erro ao editar o produto:', error);
@@ -98,9 +113,6 @@ export function HomeAdmin() {
 
 
     const handleSetEditCategoria = (index) => {
-        // quero pegar o id do elemento clicado 
-        // passar as informações para "editar Categoria" de acordo com o id
-        // só depois atualizar o status
         setEditCategoriaForm(minhasCategorias[index]);
         setStatus("editCategoria");
     }
@@ -108,9 +120,7 @@ export function HomeAdmin() {
 
         async function getProducts() {
             const response = await api.get(`/api/v1/product/get`);
-         //   response.data.forEach(produto => { setMeusProdutos(prevProdutos => [...prevProdutos, produto])})
-         setMeusProdutos(response.data)
-            console.log(meusProdutos)
+            setMeusProdutos(response.data)
         }
         getProducts();
     }
@@ -122,6 +132,32 @@ export function HomeAdmin() {
           [name]: value
         }));
       };
+
+      const handleEditProdutoFormFileChange = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        const { name, value } = e.target;
+        reader.onloadend = () => {
+            setEditProdutoForm(prevState => ({
+                ...prevState,
+                [name]: reader.result
+              }));
+        };
+        reader.readAsDataURL(file);
+      };
+
+      const handleAddProdutoFormFileChange = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setAddProdutoForm((prevState) => ({
+            ...prevState,
+            foto: reader.result // Armazena a imagem convertida em base64
+          }));
+        };
+        reader.readAsDataURL(file);
+      };
+      
 
       const handleAddProdutoFormChange = (e) => {
         const { name, value } = e.target;
@@ -153,12 +189,9 @@ export function HomeAdmin() {
 
       const handleEditProdutoSubmit = async () => {
         try {
-          // Simulação de chamada à API
           const response = await api.post(`/api/v1/product/update`, editProdutoForm);
-          if(response.data === true)
-            navigate('/dashboard')
-            window.location.reload();
-          // Lógica adicional aqui (redirecionamento, atualização de estado, etc.)
+          handleMessage(response.data,"Produto atualizado com sucesso!","Erro ao atualizar produto")
+
       
         } catch (error) {
           console.error('Erro ao editar o produto:', error);
@@ -167,41 +200,48 @@ export function HomeAdmin() {
 
       const handleAddProdutoSubmit = async () => {
         try {
-          // Simulação de chamada à API
           const response = await api.post(`/api/v1/product/create`, addProdutoForm);
-          if(response.data === true)
-            navigate('/dashboard')
-            window.location.reload();
-          // Lógica adicional aqui (redirecionamento, atualização de estado, etc.)
+          handleMessage(response.data,"Produto adicionado com sucesso!","Erro ao adicionar produto")
       
         } catch (error) {
           console.error('Erro ao adicionar o produto:', error);
         }
       };
 
+      const handleMessage = (response,messageSucesso, messageError) => {
+        if(response === true){
+            setSuccessMessage(messageSucesso);
+            setTimeout(() => {
+                setSuccessMessage("");
+                navigate('/dashboard')
+                window.location.reload();
+                }, 2000);  
+            }
+            else{
+            setErrorMessage(messageError);  
+            setTimeout(() => {
+                setErrorMessage("");
+                }, 2000);
+            }
+      }
+
       const handleAddCategoriaSubmit = async () => {
         try {
-          // Simulação de chamada à API
           const response = await api.post(`/api/v1/categoria/create`, addCategoriaForm);
-          if(response.data === true)
-            navigate('/dashboard')
-            window.location.reload();
-          // Lógica adicional aqui (redirecionamento, atualização de estado, etc.)
+          handleMessage(response.data,"Categoria adicionada com sucesso!","Erro ao adicionar categoria")
       
         } catch (error) {
-          console.error('Erro ao adicionar o produto:', error);
+          console.error('Erro ao adicionar uma categoria:', error);
         }
       };
+
+   
       
       
       const handleEditCategoriaSubmit = async () => {
         try {
-          // Simulação de chamada à API
           const response = await api.post(`/api/v1/categoria/update`, editCategoriaForm);
-          if(response.data === true)
-            navigate('/dashboard')
-            window.location.reload();
-          // Lógica adicional aqui (redirecionamento, atualização de estado, etc.)
+          handleMessage(response.data,"Categoria atualizada com sucesso!","Erro ao atualizar categoria")
       
         } catch (error) {
           console.error('Erro ao editar a categoria:', error);
@@ -218,13 +258,33 @@ export function HomeAdmin() {
     }
 
 
+    const getPedidosClientes = () => {
+        async function getPedidosClientes() {
+            const response = await api.get(`/api/v1/user/getAllUserSales`);
+            setMeusPedidos(response.data)
+        }
+        getPedidosClientes();
+    }
+   
+
     useEffect(() => {
         getMeusProdutos();
         getMinhasCategorias();
+        getPedidosClientes();
     }, []);
 
     return (
         <section className="section-admin div-column">
+            {successMessage && (
+          <div className="alert alert-success mt-3 text-center fixed-top" role="alert">
+          {successMessage}
+          </div>
+        )}
+        {errorMessage && (
+          <div className="alert alert-danger mt-3 text-center fixed-top" role="alert">
+          {errorMessage}
+          </div>
+        )}
             <div className="div-row">
                 <h1>Base de Produtos</h1>
                 <span className="admin">admin</span>
@@ -248,7 +308,13 @@ export function HomeAdmin() {
                         Categorias
                     </button>
 
-
+                    <button 
+                        className="item-menu"
+                        id={status === "pedidos" ? "selected" : null}
+                        onClick={handleSetPedidos}
+                    >
+                        Pedidos dos clientes
+                    </button>
                 </div>
 
                 {status === "produtos" && 
@@ -280,9 +346,6 @@ export function HomeAdmin() {
 
                                     <div className="dados">
                                         <div className="categorias">
-                                            {/* {produto.categorias.map((categoria) => 
-                                                <span className="tag">{categoria}</span>
-                                            )} */}
                                         </div>
                                         
                                         <label>{produto.descricao}</label>
@@ -388,16 +451,28 @@ export function HomeAdmin() {
                                 />                  
                             </div>
 
-                            <Input 
+                                <Input
+                                    type="file"
+                                    name="foto"
+                                    label="Foto"
+                                    accept="image/*"
+                                    onChange={handleEditProdutoFormFileChange}
+                                />
+             
+                             <select
                                 id="categorias"
-                                type="text"
+                                className="selectCategoria"
                                 name="categoriaId"
-                                label="Categoria"
-                                placeholder="Digite apenas uma categoria"
-                                max-length="1"
                                 value={editProdutoForm.categoriaId}
                                 onChange={handleEditProdutoFormChange}
-                            />               
+                                >
+                            <option value="">Selecione a categoria</option>
+                            {minhasCategorias.map(categoria => (
+                                <option key={categoria.id} value={categoria.id}>
+                                {categoria.descricao}
+                                </option>
+                            ))}
+                            </select>   
                         </div>
 
                         <button
@@ -482,17 +557,28 @@ export function HomeAdmin() {
                                     onChange={handleAddProdutoFormChange}
                                 />                  
                             </div>
-
-                            <Input 
+                                <Input
+                                    type="file"
+                                    name="foto"
+                                    label="Foto"
+                                    accept="image/*"
+                                    required
+                                    onChange={handleAddProdutoFormFileChange}
+                                />
+                            <select
                                 id="categorias"
-                                type="text"
-                                max-length="1"
+                                className="selectCategoria"
                                 name="categoriaId"
-                                label="Categorias"
-                                placeholder="Digite o Id da categoria"
                                 value={addProdutoForm.categoriaId}
-                                    onChange={handleAddProdutoFormChange}
-                            />               
+                                onChange={handleAddProdutoFormChange}
+                                >
+                            <option value="">Selecione a categoria</option>
+                            {minhasCategorias.map(categoria => (
+                                <option key={categoria.id} value={categoria.id}>
+                                {categoria.descricao}
+                                </option>
+                            ))}
+                            </select>              
                         </div>
 
                         <button
@@ -531,6 +617,42 @@ export function HomeAdmin() {
                         </button>
                     </div>
                 } 
+
+                {status === "pedidos" &&
+                    <div className="lista-produto div-column">
+                        {meusPedidos.map((produto,index) => (
+                            <div className="item-pedido"> 
+                                <div className="infos-pedido">
+                                    <span className="num">PEDIDO Nº {produto.id}</span>
+                                </div>
+
+                                <div className="item-produto pedido">
+                                    <div className="infos-produto">
+                                        <img src={produto.foto} alt="Imagem produto"/>
+
+                                        <div className="dados">
+                                            <label>{produto.descricao}</label>
+                                            <div>
+                                                <span className="estoque">{produto.quantidade} unidade</span>
+                                                <span className="preco"> | Total = R${produto.preco} | Pedido feito por {produto.usuario} </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="acoes">
+                                        <button 
+                                            className="secondary"
+                                            id="cta"
+                                            onClick={() => {handleDeletePedidoCliente(index)}}
+                                        >
+                                            Excluir
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                }
             </section>
         </section>
     );

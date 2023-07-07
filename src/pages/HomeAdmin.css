@@ -20,7 +20,6 @@
     border-radius: 4px;
 }
 
-
 .div-menu {
     margin-top: 36px;
     display: flex;
@@ -228,6 +227,16 @@
     width: 597px;
 }
 
+.selectCategoria {
+    background: var(--white);
+    color: var(--black-purple);
+    border: 1px solid var(--gray-4);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 20px;
+    width: 597px;
+}
+
 .add .btn-secondary {
     padding: 16px 12px;
     width: 288px;
@@ -254,4 +263,47 @@ textarea {
 
 .numbers input {
     width: 287px;
+}
+
+/* PEDIDOS CLIENTES */
+
+.item-pedido {
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid var(--gray-5);
+    border-radius: 4px;
+    padding: 16px;
+}
+
+.infos-pedido {
+    background: #F5F5F5;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    padding: 16px;
+    border-radius: 4px;
+}
+
+.infos-pedido .num, .infos-pedido .status {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 130%; 
+    color: #848383;
+}
+
+.infos-pedido .status {
+    color: #529962;
+}
+
+.item-produto.pedido {
+    border: none;
+}
+
+.item-produto.pedido .cliente {
+    font-weight: 500;
+    font-style: italic;
 }

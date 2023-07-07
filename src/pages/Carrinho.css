@@ -1,0 +1,226 @@
+.section-carrinho {
+    margin: 48px 97px;
+}
+
+.section-carrinho h1 {
+    color: var(--blue);
+    font-size: 24px;
+}
+
+.section-carrinho .admin {
+    background-color: #FFE177;
+
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    
+    margin-left: 12px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.section-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.section-content .info-pedido {
+    min-width: 70%;
+    max-width: 85%;
+}
+
+.section-content .resumo-pedido {
+    min-width: 30%;
+    max-width: 25%;
+}
+
+/* INFO PEDIDO */
+
+.item-content .title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 16px;
+}
+
+.item-content .title span {
+    color: #3E3E3E;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 130%;
+}
+
+.item-content .title button {
+    color: #6283FA;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 130%;
+
+    background: none;
+    border: none;
+}
+
+.item-content .title button:hover {
+    opacity: 70%;
+}
+
+.item-produto.carrinho img {
+    height: 50px;
+}
+
+.item-produto.carrinho label {
+    font-size: 14px;
+    max-width: 80%;
+}
+
+.item-produto.carrinho .acoes {
+    align-items: center;
+    gap: 16px;
+}
+
+.qtd {
+    display: flex;
+    align-items: center;
+    padding: 12px 8px;
+    
+    border: 1px solid var(--gray-5);
+    border-radius: 4px;
+
+    height: 42px;
+    gap: 12px; 
+}
+
+.qtd span {
+    color: #262626;
+    text-align: center;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%;
+}
+
+.icon-button {
+    border: none;
+    background: none;
+    height: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-button:hover {
+    opacity: 70%;
+}
+
+.icon-button img {
+    width: 20px;
+    height: 20px;
+}
+
+.icon-button .trash {
+    width: 32px;
+    height: 32px;
+}
+
+.acoes .preco-produto {
+    color: #6283FA;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 130%;
+}
+
+/* RESUMO PEDIDO */
+
+.resumo-pedido {
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid var(--gray-5);
+    border-radius: 4px;
+
+    padding: 24px;
+    gap: 16px;
+    margin-top: 36px;
+    height: fit-content;
+}
+
+.resumo-pedido h3 {
+    color: #3E3E3E;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 130%;
+}
+
+.resumo-pedido label {
+    color: #5E5E5E;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 130%;
+}
+
+.resumo-pedido hr {
+    border: 1px solid var(--gray-5);
+}
+
+.resumo-pedido .total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.resumo-pedido .total label {
+    color: #5D5D5D;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 130%;
+}
+
+.resumo-pedido .total .total-price {
+    color: var(--blue);
+}
+
+.resumo-pedido .btn-finalizar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--yellow);
+    color: var(--black-purple);
+    font-weight: 500;
+
+    border: 0;
+    border-radius: 8px;
+    
+    margin-top: 8px;
+    padding: 16px 0;
+
+    width: 100%;
+}
+.resumo-pedido .btn-finalizar[disabled] {
+    background: #a9a9a9; /* Altere para a cor cinza desejada */
+    color: var(--white); /* Altere para a cor de texto desejada */
+    cursor: not-allowed;
+  }
+
+  .resumo-pedido .btn-finalizar:not([disabled]):hover {
+    background: var(--yellow-hover); /* Altere para a cor de hover desejada */
+  }

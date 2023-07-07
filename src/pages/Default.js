@@ -12,7 +12,7 @@ export function Default() {
   useEffect(() => {
     if (email !== "" && email != null && email !== undefined) {
       async function getProfile() {
-        const response = await api.get(`/ap1/v1/user/getProfile/${email}`);
+        const response = await api.get(`/api/v1/user/getProfile/${email}`);
         setAdmin(response.data.admin);
       }
       getProfile();

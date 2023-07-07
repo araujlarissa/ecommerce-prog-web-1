@@ -15,7 +15,7 @@ export function Sidebar() {
     
     if(email !== "" && email != null && email !== undefined){
         async function getProfile() {
-            const response = await api.get(`/ap1/v1/user/getProfile/${email}`);
+            const response = await api.get(`/api/v1/user/getProfile/${email}`);
             response != null ? setisLogged(true) : setisLogged(false);
             setAdmin(response.data.admin);
         }
@@ -30,7 +30,7 @@ export function Sidebar() {
 
         {isLogged ?
             <div className="actions-nav">
-                {admin ?
+                {!admin ?
                     <NavLink to="/carrinho">
                         <ShoppingCart 
                             color="#FFF"

@@ -1,6 +1,7 @@
 import React, { useState, useEffect  } from "react";
 import { useNavigate  } from "react-router-dom";
 
+
 import { Input } from "../components/Input";
 import { User, ShoppingBag, SignOut} from "phosphor-react";
 
@@ -25,36 +26,23 @@ export function Profile () {
     const handleSetConta = () => setStatus("minha-conta");
     const handleSetPedidos = () => setStatus("meus-pedidos");
 
-    const getMeusPedidos = () => setPedidos([
-        {
-            id: '12345678',
-            status: 'entregue',
-            img: 'https://cobasi.vteximg.com.br/arquivos/ids/939212/racao-golden-formula-caes-adultos-racas-pequenas-frango-arroz-mini-bits-3626279-1kg.jpg?v=638127640641870000',
-            produto: 'Ração Golden Special para Cães Adultos Sabor Frango e Carne - 20kg',
-            total: 'R$149,90',
-        },
-        {
-            id: '12345678',
-            status: 'entregue',
-            img: 'https://cobasi.vteximg.com.br/arquivos/ids/939212/racao-golden-formula-caes-adultos-racas-pequenas-frango-arroz-mini-bits-3626279-1kg.jpg?v=638127640641870000',
-            produto: 'Ração Golden Special para Cães Adultos Sabor Frango e Carne - 20kg',
-            total: 'R$149,90',
-        },
-        {
-            id: '12345678',
-            status: 'entregue',
-            img: 'https://cobasi.vteximg.com.br/arquivos/ids/939212/racao-golden-formula-caes-adultos-racas-pequenas-frango-arroz-mini-bits-3626279-1kg.jpg?v=638127640641870000',
-            produto: 'Ração Golden Special para Cães Adultos Sabor Frango e Carne - 20kg',
-            total: 'R$149,90',
+    const getMeusPedidos = () => {
+
+        async function getPedidosFinalizados() {
+            const response = await api.get(`/api/v1/user/getUserSales`);
+            console.log(response.data)
+            setPedidos(response.data)
         }
-        
-    ]);
+        getPedidosFinalizados();
+    }
+
+   
 
     const handleSubmit = async (e) => {
         e.preventDefault();
     
         try {
-            const response = await api.post(`/ap1/v1/user/updateUser`,{
+            const response = await api.post(`/api/v1/user/updateUser`,{
                 nome: nome,
                 endereco: endereco,
                 email: email,
@@ -86,7 +74,7 @@ export function Profile () {
     }
 
     const deleteAccount = async () => {
-        const response = await api.delete(`/ap1/v1/user/deleteUser`, {
+        const response = await api.delete(`/api/v1/user/deleteUser`, {
             data: { email: email }
         });
 
@@ -108,7 +96,7 @@ export function Profile () {
     useEffect(() => {
         async function getProfile() {
             let email = sessionStorage.getItem("email")
-            const response = await api.get(`/ap1/v1/user/getProfile/${email}`);
+            const response = await api.get(`/api/v1/user/getProfile/${email}`);
             setNome(response.data.nome);
             setEmail(response.data.email);
             setEndereco(response.data.endereco);
@@ -274,20 +262,19 @@ export function Profile () {
                             {pedidos.map(pedido => (
                                 <div className="item-pedido">
                                     <div className="infos-pedido">
-                                        <span className="id">PEDIDO Nº {pedido.id}</span>
-                                        <span className="status">{pedido.status}</span>
-                                        
+                                        <span className="idProduto">PEDIDO Nº {pedido.id}</span>    
                                     </div>
-
-                                    {/* <hr id="separador"/> */}
 
                                     <div className="content-pedido">
                                         <div className="desc">
-                                            <img src={pedido.img} alt={pedidos.produto} />
-                                            <label>{pedido.produto}</label>
+                                            <img src={pedido.foto} alt="Sem foto." />
+                                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'baseline' }}>
+                                            <label>{pedido.descricao}</label>
+                                            <p>Quantidade: {pedido.quantidade}</p>
+                                            </div>
                                         </div>
                                         
-                                        <h3>{pedido.total}</h3>
+                                        <h3>Total: R$ {pedido.preco}</h3>
                                     </div>
                                 </div>
                             ))}

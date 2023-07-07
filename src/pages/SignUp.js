@@ -22,7 +22,7 @@ export function SignUp() {
         e.preventDefault();
 
         try {
-            const response = await api.post(`/ap1/v1/user/create`,{
+            const response = await api.post(`/api/v1/user/create`,{
                 nome: nome,
                 endereco: endereco,
                 email: email,
@@ -102,8 +102,7 @@ export function SignUp() {
                     id="password"
                     type="password"
                     label="Senha"
-                    placeholder="Não escreva 123"
-                    value={senha}
+                    placeholder="Digite sua senha"
                     onChange={(e) => setSenha(e.target.value)}
                 />
 

@@ -9,6 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 export function Login() {
   const [email, setEmail] = useState("");
+  const [admin, setAdmin] = useState(false);
   const [loginState, setLoginState] = useState({ loggedIn: false});
   const [password, setPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -20,7 +21,7 @@ export function Login() {
     e.preventDefault();
 
     try {
-      const response = await api.post("/ap1/v1/user/login", {
+      const response = await api.post("/api/v1/user/login", {
         email,
         senha: password,
       });
@@ -41,6 +42,7 @@ export function Login() {
 
       sessionStorage.setItem("jwt", response.data.token);
       sessionStorage.setItem("email", email)
+      setAdmin(response.data.role);
       setLoginState({ loggedIn: true});
 
     } catch (error) {
@@ -56,7 +58,8 @@ export function Login() {
   if (loginState.loggedIn) {
     setTimeout(() => {
       setSuccessMessage("");
-      navigate('/profile/');
+      if(admin) return navigate('/dashboard/');
+      navigate('/paginaInicial/');
       }, 2000);  
   }
 
@@ -80,7 +83,7 @@ export function Login() {
           id="email"
           type="email"
           label="Email"
-          placeholder="Ex: alifernandes@gmail.com"
+          placeholder="Digite seu e-mail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -89,7 +92,7 @@ export function Login() {
           id="password"
           type="password"
           label="Senha"
-          placeholder="Não escreva 123"
+          placeholder="Digite sua senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />

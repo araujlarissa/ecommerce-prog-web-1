@@ -172,6 +172,9 @@
     width: 600px;
     margin-bottom: 16px;
 }
+.idProduto{
+    font-family: 'Poppins', sans-serif;
+}
 
 .meus-pedidos .infos-pedido {
     display: flex;
